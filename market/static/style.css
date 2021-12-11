@@ -2,3 +2,17 @@ body {
     background-color: #212121;
     color: white;
 }
+
+.form-register {
+    color: white;
+}
+.container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-container {
+    
+}
