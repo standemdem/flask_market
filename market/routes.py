@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 from wtforms.fields.simple import PasswordField
 from market import app
 from market.models import Item, User
@@ -27,9 +27,9 @@ def register_page():
         db.session.add(user_to_create)
         db.session.commit()
         return redirect(url_for('market_page'))
-    print('hello')
+
     # checks if there arer errors when submitting
     if form.errors != {}:
         for err_msge in form.errors.values():
-            print(f'There was an error when creating a user{err_msge}')
+            flash(f'There was an error when creating a user{err_msge}')
     return render_template('register.html', form=form)
