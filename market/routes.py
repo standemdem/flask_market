@@ -3,7 +3,7 @@ from flask import render_template, redirect, url_for, flash
 from market.models import Item, User
 from market.forms import RegisterForm, LoginForm
 from market import db
-from flask_login import login_user
+from flask_login import login_user, logout_user, login_required
 
 
 @app.route('/')
@@ -12,6 +12,7 @@ def home_page():
     return render_template('home.html')
 
 @app.route('/market_page')
+@login_required
 def market_page():
     items = Item.query.all()
     return render_template('market.html', items=items)
@@ -42,7 +43,7 @@ def login_page():
         attempted_user = User.query.filter_by(username=form.username.data).first()
         if attempted_user and attempted_user.check_password_correction(attempted_password=form.password.data):
             login_user(attempted_user)
-            flash(f'Success! You are logged in as: {attempted_user.username}', category='success')
+            flash(f'Success! You are logged in as: {attempted_user.username}', 'success')
             print(f'{attempted_user.username} has logged in')
             return redirect(url_for('market_page'))
         else:
@@ -50,3 +51,9 @@ def login_page():
             flash('Username and password are not matched! Please try again', category='danger')
 
     return render_template('login.html', form=form)
+
+@app.route('/logout')
+def logout_page():
+    logout_user()
+    flash(f"You have been successfully logged out", 'info')
+    return redirect(url_for('home_page'))

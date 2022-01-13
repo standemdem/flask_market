@@ -12,5 +12,6 @@ app.config['SECRET_KEY']='1f5f44d9fbe3bc914dc0f38c'
 bcrypt = Bcrypt(app)
 
 login_manager = LoginManager(app)
+login_manager.login_view = 'login_page'
 
 from market import routes

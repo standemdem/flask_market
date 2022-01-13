@@ -1,11 +1,15 @@
 from market import bcrypt, login_manager
-from market import db
+from market import db, app
 from flask_login import UserMixin
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+@app.template_filter()
+def numberFormat(value):
+    return f" {format(int(value), ',d')} $"
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer(), primary_key=True)
@@ -14,6 +18,8 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(length=60), nullable=False)
     budget = db.Column(db.Integer(), nullable=False, default=1000)
     items = db.relationship('Item', backref='owned user', lazy=True)
+
+
 
     @property
     def password(self):
