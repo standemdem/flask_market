@@ -27,9 +27,11 @@ def register_page():
                                 password = form.password1.data)
         db.session.add(user_to_create)
         db.session.commit()
+        login_user(user_to_create)
+        flash(f'You\'ve successfully created your account! You are now logged in as {user_to_create.username}', category="success")
         return redirect(url_for('market_page'))
 
-    # checks if there arer errors when submitting
+    # checks if there are errors when submitting
     if form.errors != {}:
         for err_msge in form.errors.values():
             flash(f'There was an error when creating a user{err_msge}')
