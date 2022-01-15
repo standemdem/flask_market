@@ -18,3 +18,10 @@ body {
     font-weight: bold;
     color: #7cfc00;
 }
+.wrapper {
+    margin: 20px 20px;
+}
+/* Modal styling */
+.modal_styling {
+    background-color: rgb(22, 21, 19);
+}

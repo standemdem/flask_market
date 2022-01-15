@@ -35,7 +35,7 @@
             <ul class="navbar-nav">
                 {% if current_user.is_authenticated %}
                 <li class="nav-item">
-                    <span class=" nav-link ">
+                    <span class=" nav-link budget ">
                         <p class="budget"><i class="fas fa-coins"></i>{{ current_user.budget | numberFormat }}</p>
                     </span>
                 </li>
