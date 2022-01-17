@@ -45,6 +45,20 @@ Market Page
         <h2>Owned Items</h2>
         <p>Click on an item to put an item back on the market</p>
         <br>
+        <div class="row">
+            {% for owned_item in owned_items %}
+                <div class="col-md-6">
+                    <div class="card text-center bg-dark">
+                        <h5 class="card-title">{{owned_item.name}}</h5>
+                        <button type="button" class="btn btn-outline-danger" data-toggle="modal"
+                        data-target="#{{owned_item}}">Sell this item
+                        </button>
+                        <p class="card-text">This item cost {{owned_item.price}}$</p>
+                    </div>
+                    
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
