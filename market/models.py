@@ -19,8 +19,6 @@ class User(db.Model, UserMixin):
     budget = db.Column(db.Integer(), nullable=False, default=1000)
     items = db.relationship('Item', backref='owned user', lazy=True)
 
-
-
     @property
     def password(self):
         return self.password
@@ -32,6 +30,10 @@ class User(db.Model, UserMixin):
     def check_password_correction(self, attempted_password):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
             
+    def can_purchase(self, item_obj):
+        # checks client solvability
+        # returns boolean
+        return self.budget >= item_obj.price
 
 
 class Item(db.Model):
