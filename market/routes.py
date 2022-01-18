@@ -19,13 +19,26 @@ def market_page():
     sell_form = SellItemForm()
     
     if request.method == 'POST':
+        # PURCHASE ITEM LOGIC
         purchased_item = request.form.get('purchased_item')
         p_item_object= Item.query.filter_by(name=purchased_item).first()
-        if p_item_object and current_user.can_purchase(p_item_object):
-            p_item_object.buy(current_user)
-            flash(f"Congrats! You've just purchased {p_item_object.name} for {p_item_object.price}", category="success")
-        else:
-            flash(f"You don't have enough money to buy {p_item_object.name}", category="warning")
+        if p_item_object:
+            if current_user.can_purchase(p_item_object):
+                p_item_object.buy(current_user)
+                flash(f"Congrats! You've just purchased {p_item_object.name} for {p_item_object.price}", category="success")
+            else:
+                flash(f"You don't have enough money to buy {p_item_object.name}", category="warning")
+        
+        # SELL ITEM LOGIC
+        sold_item = request.form.get('sold_item')
+        s_item_object = Item.query.filter_by(name=sold_item).first()
+        if s_item_object:
+            if current_user.can_sell(s_item_object):
+                s_item_object.sell(current_user)
+                flash(f"Congrats! You've just sold {s_item_object.name} for {s_item_object.price}", category="success")
+            else:
+                flash(f"somethig wen't wrong with {s_item_object.name}", category="danger")
+        
         return redirect(url_for('market_page'))
     
     if request.method == 'GET':
